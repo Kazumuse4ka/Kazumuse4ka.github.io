@@ -2,6 +2,7 @@ const menuToggle = document.querySelector('#menu-toggle')
 const nav = document.querySelector('#main-nav')
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 const pageIntro = document.querySelector('.page-intro')
+const backToTop = document.querySelector('#back-to-top')
 const languagePicker = document.querySelector('.language-picker')
 const languageButton = document.querySelector('#language-toggle')
 const languageMenu = document.querySelector('#language-menu')
@@ -109,7 +110,6 @@ const closeLanguageMenu = () => {
 
 languageButton.addEventListener('click', () => {
   const willOpen = languageMenu.hidden
-  if (willOpen) closeMenu()
   languageMenu.hidden = !willOpen
   languageButton.setAttribute('aria-expanded', String(willOpen))
   if (willOpen) languageMenu.querySelector('[aria-current="true"]')?.focus()
@@ -145,6 +145,11 @@ menuToggle.addEventListener('click', () => {
 })
 
 nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu))
+
+backToTop.addEventListener('click', (event) => {
+  event.preventDefault()
+  window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' })
+})
 
 document.querySelectorAll('[data-delay]').forEach((element) => {
   element.style.setProperty('--delay', `${element.dataset.delay}ms`)

@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Unbounded:wght@500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body class="intro-active">
+  <body class="intro-active" id="top">
     <div class="page-intro" aria-hidden="true">
       <div class="intro-mark">JR</div>
       <div class="intro-name">just_remochka</div>
@@ -26,7 +26,7 @@
     <canvas class="aurora" id="aurora" aria-hidden="true"></canvas>
     <div class="noise" aria-hidden="true"></div>
 
-    <header class="site-header" id="top">
+    <header class="site-header">
       <a class="logo" href="#top" aria-label="На главную" data-i18n-aria-label="aria.home">
         <span class="logo-mark">JR</span>
         <span class="logo-text">just_remochka</span>
@@ -37,9 +37,6 @@
         <a href="#about" data-i18n="nav.about">Обо мне</a>
         <a href="#stack" data-i18n="nav.stack">Стек</a>
         <a href="#contacts" data-i18n="nav.contacts">Контакты</a>
-      </nav>
-
-      <div class="header-actions">
         <div class="language-picker">
           <button class="language-button" id="language-toggle" type="button" aria-controls="language-menu" aria-expanded="false" aria-haspopup="menu" aria-label="Выбрать язык" data-i18n-aria-label="language.label">
             <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.2 2.5 3.3 5.5 3.3 9S14.2 18.5 12 21c-2.2-2.5-3.3-5.5-3.3-9S9.8 5.5 12 3Z"/></svg>
@@ -52,6 +49,9 @@
             <button type="button" role="menuitem" data-language="en">ENG</button>
           </div>
         </div>
+      </nav>
+
+      <div class="header-actions">
         <a class="button button-small" href="#contacts" data-i18n="nav.discuss">Обсудить проект</a>
         <button class="menu-button" id="menu-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Открыть меню" data-i18n-aria-label="aria.openMenu">
           <span></span><span></span>
@@ -163,46 +163,46 @@
           <article class="stack-group">
             <div class="stack-group-heading"><span>01</span><div><h3 data-i18n="stack.foundationTitle">Основа</h3><p data-i18n="stack.foundationDescription">Языки, среда и данные</p></div></div>
             <div class="tech-grid">
-              <div class="tech-item"><i>TS</i><strong>TypeScript</strong><span>↗</span></div>
-              <div class="tech-item"><i>JS</i><strong>Node.js</strong><span>↗</span></div>
-              <div class="tech-item"><i>PG</i><strong>PostgreSQL</strong><span>↗</span></div>
-              <div class="tech-item"><i>PY</i><strong>Python</strong><span>↗</span></div>
+              <a class="tech-item" href="https://www.typescriptlang.org/" target="_blank" rel="noreferrer"><i>TS</i><strong>TypeScript</strong><span>↗</span></a>
+              <a class="tech-item" href="https://nodejs.org/" target="_blank" rel="noreferrer"><i>JS</i><strong>Node.js</strong><span>↗</span></a>
+              <a class="tech-item" href="https://www.postgresql.org/" target="_blank" rel="noreferrer"><i>PG</i><strong>PostgreSQL</strong><span>↗</span></a>
+              <a class="tech-item" href="https://www.python.org/" target="_blank" rel="noreferrer"><i>PY</i><strong>Python</strong><span>↗</span></a>
             </div>
           </article>
 
           <article class="stack-group">
             <div class="stack-group-heading"><span>02</span><div><h3 data-i18n="stack.frontendTitle">Интерфейсные системы</h3><p data-i18n="stack.frontendDescription">Веб-продукты и взаимодействие</p></div></div>
             <div class="tech-grid">
-              <div class="tech-item"><i>R</i><strong>React</strong><span>↗</span></div>
-              <div class="tech-item"><i>N</i><strong>Next.js</strong><span>↗</span></div>
-              <div class="tech-item"><i>V</i><strong>Vite</strong><span>↗</span></div>
-              <div class="tech-item"><i>UI</i><strong>MUI</strong><span>↗</span></div>
-              <div class="tech-item"><i>AX</i><strong>Axios</strong><span>↗</span></div>
-              <div class="tech-item"><i>EX</i><strong>Express</strong><span>↗</span></div>
+              <a class="tech-item" href="https://react.dev/" target="_blank" rel="noreferrer"><i>R</i><strong>React</strong><span>↗</span></a>
+              <a class="tech-item" href="https://nextjs.org/" target="_blank" rel="noreferrer"><i>N</i><strong>Next.js</strong><span>↗</span></a>
+              <a class="tech-item" href="https://vite.dev/" target="_blank" rel="noreferrer"><i>V</i><strong>Vite</strong><span>↗</span></a>
+              <a class="tech-item" href="https://mui.com/" target="_blank" rel="noreferrer"><i>UI</i><strong>MUI</strong><span>↗</span></a>
+              <a class="tech-item" href="https://axios.rest/" target="_blank" rel="noreferrer"><i>AX</i><strong>Axios</strong><span>↗</span></a>
+              <a class="tech-item" href="https://expressjs.com/" target="_blank" rel="noreferrer"><i>EX</i><strong>Express</strong><span>↗</span></a>
             </div>
           </article>
 
           <article class="stack-group">
             <div class="stack-group-heading"><span>03</span><div><h3 data-i18n="stack.aiTitle">Лаборатория интеллекта</h3><p data-i18n="stack.aiDescription">Модели, инференс и обучение</p></div></div>
             <div class="tech-grid">
-              <div class="tech-item"><i>AI</i><strong>OpenAI</strong><span>↗</span></div>
-              <div class="tech-item"><i>OL</i><strong>Ollama</strong><span>↗</span></div>
-              <div class="tech-item"><i>LC</i><strong>llama.cpp</strong><span>↗</span></div>
-              <div class="tech-item"><i>PT</i><strong>PyTorch</strong><span>↗</span></div>
-              <div class="tech-item"><i>TF</i><strong>TensorFlow</strong><span>↗</span></div>
-              <div class="tech-item"><i>SK</i><strong>scikit-learn</strong><span>↗</span></div>
+              <a class="tech-item" href="https://openai.com/" target="_blank" rel="noreferrer"><i>AI</i><strong>OpenAI</strong><span>↗</span></a>
+              <a class="tech-item" href="https://ollama.com/" target="_blank" rel="noreferrer"><i>OL</i><strong>Ollama</strong><span>↗</span></a>
+              <a class="tech-item" href="https://github.com/ggml-org/llama.cpp" target="_blank" rel="noreferrer"><i>LC</i><strong>llama.cpp</strong><span>↗</span></a>
+              <a class="tech-item" href="https://pytorch.org/" target="_blank" rel="noreferrer"><i>PT</i><strong>PyTorch</strong><span>↗</span></a>
+              <a class="tech-item" href="https://www.tensorflow.org/" target="_blank" rel="noreferrer"><i>TF</i><strong>TensorFlow</strong><span>↗</span></a>
+              <a class="tech-item" href="https://scikit-learn.org/" target="_blank" rel="noreferrer"><i>SK</i><strong>scikit-learn</strong><span>↗</span></a>
             </div>
           </article>
 
           <article class="stack-group">
             <div class="stack-group-heading"><span>04</span><div><h3 data-i18n="stack.dataTitle">Данные и творчество</h3><p data-i18n="stack.dataDescription">Аналитика, визуализация и эксперименты</p></div></div>
             <div class="tech-grid">
-              <div class="tech-item"><i>NP</i><strong>NumPy</strong><span>↗</span></div>
-              <div class="tech-item"><i>SP</i><strong>SciPy</strong><span>↗</span></div>
-              <div class="tech-item"><i>PD</i><strong>Pandas</strong><span>↗</span></div>
-              <div class="tech-item"><i>MP</i><strong>Matplotlib</strong><span>↗</span></div>
-              <div class="tech-item"><i>SB</i><strong>Seaborn</strong><span>↗</span></div>
-              <div class="tech-item"><i>CF</i><strong>Clickteam Fusion</strong><span>↗</span></div>
+              <a class="tech-item" href="https://numpy.org/" target="_blank" rel="noreferrer"><i>NP</i><strong>NumPy</strong><span>↗</span></a>
+              <a class="tech-item" href="https://scipy.org/" target="_blank" rel="noreferrer"><i>SP</i><strong>SciPy</strong><span>↗</span></a>
+              <a class="tech-item" href="https://pandas.pydata.org/" target="_blank" rel="noreferrer"><i>PD</i><strong>Pandas</strong><span>↗</span></a>
+              <a class="tech-item" href="https://matplotlib.org/" target="_blank" rel="noreferrer"><i>MP</i><strong>Matplotlib</strong><span>↗</span></a>
+              <a class="tech-item" href="https://seaborn.pydata.org/" target="_blank" rel="noreferrer"><i>SB</i><strong>Seaborn</strong><span>↗</span></a>
+              <a class="tech-item" href="https://www.clickteam.com/" target="_blank" rel="noreferrer"><i>CF</i><strong>Clickteam Fusion</strong><span>↗</span></a>
             </div>
           </article>
         </div>
@@ -242,7 +242,7 @@
     <footer class="footer section-shell">
       <span>© 2026 just_remochka</span>
       <span data-i18n="footer.made">Сделано с любопытством и JavaScript</span>
-      <a href="#top" data-i18n="footer.top">Наверх ↑</a>
+      <a id="back-to-top" href="#top" data-i18n="footer.top">Наверх ↑</a>
     </footer>
 
     <script src="i18n.js" defer></script>
