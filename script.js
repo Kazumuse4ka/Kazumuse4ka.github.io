@@ -3,12 +3,26 @@ const nav = document.querySelector('#main-nav')
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 const pageIntro = document.querySelector('.page-intro')
 
-window.setTimeout(() => {
-  pageIntro.classList.add('is-leaving')
-  document.body.classList.remove('intro-active')
+let introSeen = false
+try {
+  introSeen = sessionStorage.getItem('portfolio-intro-seen') === 'true'
+  sessionStorage.setItem('portfolio-intro-seen', 'true')
+} catch {
+  introSeen = false
+}
 
-  window.setTimeout(() => pageIntro.remove(), reduceMotion ? 0 : 900)
-}, reduceMotion ? 0 : 1300)
+if (pageIntro) {
+  if (reduceMotion || introSeen) {
+    document.body.classList.remove('intro-active')
+    pageIntro.remove()
+  } else {
+    window.setTimeout(() => {
+      pageIntro.classList.add('is-leaving')
+      document.body.classList.remove('intro-active')
+      window.setTimeout(() => pageIntro.remove(), 550)
+    }, 650)
+  }
+}
 
 const closeMenu = () => {
   nav.classList.remove('open')
@@ -92,28 +106,44 @@ document.querySelectorAll('[data-copy]').forEach((button) => {
 
 const profileCard = document.querySelector('.profile-card')
 const heroVisual = document.querySelector('.hero-visual')
+const precisePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches
 
-if (!reduceMotion) {
+if (!reduceMotion && precisePointer) {
+  let tiltFrame = 0
+
   heroVisual.addEventListener('pointermove', (event) => {
-    const bounds = heroVisual.getBoundingClientRect()
-    const x = (event.clientX - bounds.left) / bounds.width - 0.5
-    const y = (event.clientY - bounds.top) / bounds.height - 0.5
-    profileCard.style.transform = `rotateY(${x * 8}deg) rotateX(${-y * 8}deg) rotateZ(3deg)`
+    if (tiltFrame) return
+
+    tiltFrame = requestAnimationFrame(() => {
+      const bounds = heroVisual.getBoundingClientRect()
+      const x = (event.clientX - bounds.left) / bounds.width - 0.5
+      const y = (event.clientY - bounds.top) / bounds.height - 0.5
+      profileCard.style.transform = `rotateY(${x * 8}deg) rotateX(${-y * 8}deg) rotateZ(3deg)`
+      tiltFrame = 0
+    })
   })
 
   heroVisual.addEventListener('pointerleave', () => {
+    cancelAnimationFrame(tiltFrame)
+    tiltFrame = 0
     profileCard.style.transform = 'rotate(3deg)'
   })
 }
 
 const canvas = document.querySelector('#aurora')
-const context = canvas.getContext('2d')
+const context = canvas.getContext('2d', { alpha: true, desynchronized: true })
+const mobileViewport = window.matchMedia('(max-width: 700px)')
+const hasEnoughCores = (navigator.hardwareConcurrency ?? 4) > 2
 let width = 0
 let height = 0
-let frame = 0
+let phase = 0
+let animationFrame = 0
+let resizeFrame = 0
+let lastFrameTime = 0
+let canvasIsVisible = true
 
 const resizeCanvas = () => {
-  const ratio = Math.min(window.devicePixelRatio || 1, 2)
+  const ratio = mobileViewport.matches ? 1 : Math.min(window.devicePixelRatio || 1, 1.25)
   width = window.innerWidth
   height = window.innerHeight
   canvas.width = width * ratio
@@ -125,30 +155,65 @@ const resizeCanvas = () => {
 
 const drawBand = (offset, amplitude, thickness, color, speed) => {
   context.beginPath()
-  for (let x = -60; x <= width + 60; x += 24) {
+  const step = mobileViewport.matches ? 40 : 30
+  for (let x = -60; x <= width + 60; x += step) {
     const normalized = x / width
-    const y = height * offset + Math.sin(normalized * 5 + frame * speed) * amplitude + Math.sin(normalized * 11 - frame * speed * 0.55) * amplitude * 0.35
+    const y = height * offset + Math.sin(normalized * 5 + phase * speed) * amplitude + Math.sin(normalized * 11 - phase * speed * 0.55) * amplitude * 0.35
     if (x === -60) context.moveTo(x, y)
     else context.lineTo(x, y)
   }
   context.lineWidth = thickness
   context.strokeStyle = color
-  context.shadowBlur = thickness * 1.8
-  context.shadowColor = color
   context.stroke()
 }
 
-const drawAurora = () => {
+const shouldAnimateCanvas = () =>
+  !reduceMotion && !mobileViewport.matches && hasEnoughCores && canvasIsVisible && !document.hidden
+
+const scheduleCanvas = () => {
+  if (animationFrame || !shouldAnimateCanvas()) return
+  animationFrame = requestAnimationFrame(drawAurora)
+}
+
+const drawAurora = (time = 0) => {
+  animationFrame = 0
+  if (time && time - lastFrameTime < 33) {
+    scheduleCanvas()
+    return
+  }
+
+  lastFrameTime = time
   context.clearRect(0, 0, width, height)
   context.globalCompositeOperation = 'screen'
   drawBand(0.22, 90, 2, 'rgba(255, 255, 255, .16)', 0.012)
   drawBand(0.68, 120, 3, 'rgba(255, 255, 255, .10)', -0.009)
   drawBand(0.48, 65, 1.5, 'rgba(255, 255, 255, .07)', 0.007)
   context.globalCompositeOperation = 'source-over'
-  frame += 1
-  if (!reduceMotion) requestAnimationFrame(drawAurora)
+  phase += 1
+  scheduleCanvas()
 }
 
-window.addEventListener('resize', resizeCanvas)
+const canvasObserver = new IntersectionObserver(([entry]) => {
+  canvasIsVisible = entry.isIntersecting
+  scheduleCanvas()
+})
+
+canvasObserver.observe(document.querySelector('.hero'))
+
+document.addEventListener('visibilitychange', scheduleCanvas)
+window.addEventListener(
+  'resize',
+  () => {
+    cancelAnimationFrame(resizeFrame)
+    resizeFrame = requestAnimationFrame(() => {
+      cancelAnimationFrame(animationFrame)
+      animationFrame = 0
+      resizeCanvas()
+      drawAurora(performance.now())
+    })
+  },
+  { passive: true }
+)
+
 resizeCanvas()
 drawAurora()
