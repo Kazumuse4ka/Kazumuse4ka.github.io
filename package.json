@@ -1,0 +1,26 @@
+{
+  "name": "just_remochka.github.io",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Адаптивное демо-портфолио на HTML, CSS и чистом JavaScript.",
+  "main": "i18n.js",
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kazumuse4ka/just_remochka.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kazumuse4ka/just_remochka.github.io/issues"
+  },
+  "homepage": "https://github.com/Kazumuse4ka/just_remochka.github.io#readme",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.13.0",
+    "globals": "^17.13.0"
+  }
+}

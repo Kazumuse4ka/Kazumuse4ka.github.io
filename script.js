@@ -2,9 +2,14 @@ const menuToggle = document.querySelector('#menu-toggle')
 const nav = document.querySelector('#main-nav')
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 const pageIntro = document.querySelector('.page-intro')
-const languageSelect = document.querySelector('#language-select')
+const languagePicker = document.querySelector('.language-picker')
+const languageButton = document.querySelector('#language-toggle')
+const languageMenu = document.querySelector('#language-menu')
+const currentLanguageLabel = document.querySelector('#current-language')
+const languageOptions = [...document.querySelectorAll('[data-language]')]
 const translations = window.portfolioTranslations
 const supportedLanguages = ['kk', 'ru', 'en']
+const languageLabels = { kk: 'ҚАЗ', ru: 'РУС', en: 'ENG' }
 const languageStorageKey = 'portfolio-language'
 let currentLanguage = 'ru'
 
@@ -34,7 +39,11 @@ const applyLanguage = (language, persist = true) => {
   document.documentElement.lang = currentLanguage
   document.title = translate('meta.title')
   document.querySelector('meta[name="description"]').content = translate('meta.description')
-  languageSelect.value = currentLanguage
+  currentLanguageLabel.textContent = languageLabels[currentLanguage]
+  languageOptions.forEach((option) => {
+    if (option.dataset.language === currentLanguage) option.setAttribute('aria-current', 'true')
+    else option.removeAttribute('aria-current')
+  })
 
   document.querySelectorAll('[data-i18n]').forEach((element) => {
     element.textContent = translate(element.dataset.i18n)
@@ -62,17 +71,15 @@ const applyLanguage = (language, persist = true) => {
 
 applyLanguage(getInitialLanguage(), false)
 
-languageSelect.addEventListener('change', (event) => {
-  applyLanguage(event.target.value)
-})
-
-let introSeen = false
-try {
-  introSeen = sessionStorage.getItem('portfolio-intro-seen') === 'true'
-  sessionStorage.setItem('portfolio-intro-seen', 'true')
-} catch {
-  introSeen = false
-}
+const introSeen = (() => {
+  try {
+    const wasSeen = sessionStorage.getItem('portfolio-intro-seen') === 'true'
+    sessionStorage.setItem('portfolio-intro-seen', 'true')
+    return wasSeen
+  } catch {
+    return false
+  }
+})()
 
 if (pageIntro) {
   if (reduceMotion || introSeen) {
@@ -95,8 +102,41 @@ const closeMenu = () => {
   document.body.classList.remove('menu-open')
 }
 
+const closeLanguageMenu = () => {
+  languageMenu.hidden = true
+  languageButton.setAttribute('aria-expanded', 'false')
+}
+
+languageButton.addEventListener('click', () => {
+  const willOpen = languageMenu.hidden
+  if (willOpen) closeMenu()
+  languageMenu.hidden = !willOpen
+  languageButton.setAttribute('aria-expanded', String(willOpen))
+  if (willOpen) languageMenu.querySelector('[aria-current="true"]')?.focus()
+})
+
+languageOptions.forEach((option) => {
+  option.addEventListener('click', () => {
+    applyLanguage(option.dataset.language)
+    closeLanguageMenu()
+    languageButton.focus()
+  })
+})
+
+document.addEventListener('click', (event) => {
+  if (!languagePicker.contains(event.target)) closeLanguageMenu()
+})
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && !languageMenu.hidden) {
+    closeLanguageMenu()
+    languageButton.focus()
+  }
+})
+
 menuToggle.addEventListener('click', () => {
   const willOpen = !nav.classList.contains('open')
+  closeLanguageMenu()
   nav.classList.toggle('open', willOpen)
   menuToggle.classList.toggle('open', willOpen)
   menuToggle.setAttribute('aria-expanded', String(willOpen))

@@ -40,14 +40,18 @@
       </nav>
 
       <div class="header-actions">
-        <label class="language-picker">
-          <span class="visually-hidden" data-i18n="language.label">Выбрать язык</span>
-          <select class="language-select" id="language-select" aria-label="Выбрать язык" data-i18n-aria-label="language.label">
-            <option value="kk">ҚАЗ</option>
-            <option value="ru" selected>РУС</option>
-            <option value="en">ENG</option>
-          </select>
-        </label>
+        <div class="language-picker">
+          <button class="language-button" id="language-toggle" type="button" aria-controls="language-menu" aria-expanded="false" aria-haspopup="menu" aria-label="Выбрать язык" data-i18n-aria-label="language.label">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.2 2.5 3.3 5.5 3.3 9S14.2 18.5 12 21c-2.2-2.5-3.3-5.5-3.3-9S9.8 5.5 12 3Z"/></svg>
+            <span id="current-language">РУС</span>
+            <i aria-hidden="true">⌄</i>
+          </button>
+          <div class="language-menu" id="language-menu" role="menu" hidden>
+            <button type="button" role="menuitem" data-language="kk">ҚАЗ</button>
+            <button type="button" role="menuitem" data-language="ru" aria-current="true">РУС</button>
+            <button type="button" role="menuitem" data-language="en">ENG</button>
+          </div>
+        </div>
         <a class="button button-small" href="#contacts" data-i18n="nav.discuss">Обсудить проект</a>
         <button class="menu-button" id="menu-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Открыть меню" data-i18n-aria-label="aria.openMenu">
           <span></span><span></span>
