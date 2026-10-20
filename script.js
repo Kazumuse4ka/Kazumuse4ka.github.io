@@ -2,6 +2,69 @@ const menuToggle = document.querySelector('#menu-toggle')
 const nav = document.querySelector('#main-nav')
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 const pageIntro = document.querySelector('.page-intro')
+const languageSelect = document.querySelector('#language-select')
+const translations = window.portfolioTranslations
+const supportedLanguages = ['kk', 'ru', 'en']
+const languageStorageKey = 'portfolio-language'
+let currentLanguage = 'ru'
+
+const translate = (key) => translations[currentLanguage]?.[key] ?? translations.ru[key] ?? key
+
+const getStoredLanguage = () => {
+  try {
+    return localStorage.getItem(languageStorageKey)
+  } catch {
+    return null
+  }
+}
+
+const getInitialLanguage = () => {
+  const requestedLanguage = new URLSearchParams(window.location.search).get('lang')?.toLowerCase()
+  if (supportedLanguages.includes(requestedLanguage)) return requestedLanguage
+
+  const storedLanguage = getStoredLanguage()
+  if (supportedLanguages.includes(storedLanguage)) return storedLanguage
+
+  const browserLanguage = navigator.language.toLowerCase().split('-')[0]
+  return supportedLanguages.includes(browserLanguage) ? browserLanguage : 'ru'
+}
+
+const applyLanguage = (language, persist = true) => {
+  currentLanguage = supportedLanguages.includes(language) ? language : 'ru'
+  document.documentElement.lang = currentLanguage
+  document.title = translate('meta.title')
+  document.querySelector('meta[name="description"]').content = translate('meta.description')
+  languageSelect.value = currentLanguage
+
+  document.querySelectorAll('[data-i18n]').forEach((element) => {
+    element.textContent = translate(element.dataset.i18n)
+  })
+
+  document.querySelectorAll('[data-i18n-aria-label]').forEach((element) => {
+    element.setAttribute('aria-label', translate(element.dataset.i18nAriaLabel))
+  })
+
+  document.querySelectorAll('[data-i18n-alt]').forEach((element) => {
+    element.setAttribute('alt', translate(element.dataset.i18nAlt))
+  })
+
+  const menuIsOpen = menuToggle.getAttribute('aria-expanded') === 'true'
+  menuToggle.setAttribute('aria-label', translate(menuIsOpen ? 'aria.closeMenu' : 'aria.openMenu'))
+
+  if (persist) {
+    try {
+      localStorage.setItem(languageStorageKey, currentLanguage)
+    } catch {
+      // The page still works if storage is unavailable.
+    }
+  }
+}
+
+applyLanguage(getInitialLanguage(), false)
+
+languageSelect.addEventListener('change', (event) => {
+  applyLanguage(event.target.value)
+})
 
 let introSeen = false
 try {
@@ -28,6 +91,7 @@ const closeMenu = () => {
   nav.classList.remove('open')
   menuToggle.classList.remove('open')
   menuToggle.setAttribute('aria-expanded', 'false')
+  menuToggle.setAttribute('aria-label', translate('aria.openMenu'))
   document.body.classList.remove('menu-open')
 }
 
@@ -36,6 +100,7 @@ menuToggle.addEventListener('click', () => {
   nav.classList.toggle('open', willOpen)
   menuToggle.classList.toggle('open', willOpen)
   menuToggle.setAttribute('aria-expanded', String(willOpen))
+  menuToggle.setAttribute('aria-label', translate(willOpen ? 'aria.closeMenu' : 'aria.openMenu'))
   document.body.classList.toggle('menu-open', willOpen)
 })
 
@@ -93,13 +158,13 @@ document.querySelectorAll('[data-copy]').forEach((button) => {
         document.execCommand('copy')
         field.remove()
       }
-      status.textContent = 'Скопировано'
+      status.textContent = translate('contacts.copied')
     } catch {
       status.textContent = button.dataset.copy
     }
 
     window.setTimeout(() => {
-      status.textContent = 'Копировать'
+      status.textContent = translate('contacts.copy')
     }, 1800)
   })
 })

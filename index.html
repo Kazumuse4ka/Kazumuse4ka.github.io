@@ -27,21 +27,29 @@
     <div class="noise" aria-hidden="true"></div>
 
     <header class="site-header" id="top">
-      <a class="logo" href="#top" aria-label="На главную">
+      <a class="logo" href="#top" aria-label="На главную" data-i18n-aria-label="aria.home">
         <span class="logo-mark">JR</span>
         <span class="logo-text">just_remochka</span>
       </a>
 
-      <nav class="nav" id="main-nav" aria-label="Основная навигация">
-        <a href="#projects">Проекты</a>
-        <a href="#about">Обо мне</a>
-        <a href="#stack">Стек</a>
-        <a href="#contacts">Контакты</a>
+      <nav class="nav" id="main-nav" aria-label="Основная навигация" data-i18n-aria-label="aria.nav">
+        <a href="#projects" data-i18n="nav.projects">Проекты</a>
+        <a href="#about" data-i18n="nav.about">Обо мне</a>
+        <a href="#stack" data-i18n="nav.stack">Стек</a>
+        <a href="#contacts" data-i18n="nav.contacts">Контакты</a>
       </nav>
 
       <div class="header-actions">
-        <a class="button button-small" href="#contacts">Обсудить проект</a>
-        <button class="menu-button" id="menu-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Открыть меню">
+        <label class="language-picker">
+          <span class="visually-hidden" data-i18n="language.label">Выбрать язык</span>
+          <select class="language-select" id="language-select" aria-label="Выбрать язык" data-i18n-aria-label="language.label">
+            <option value="kk">ҚАЗ</option>
+            <option value="ru" selected>РУС</option>
+            <option value="en">ENG</option>
+          </select>
+        </label>
+        <a class="button button-small" href="#contacts" data-i18n="nav.discuss">Обсудить проект</a>
+        <button class="menu-button" id="menu-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Открыть меню" data-i18n-aria-label="aria.openMenu">
           <span></span><span></span>
         </button>
       </div>
@@ -50,18 +58,18 @@
     <main>
       <section class="hero section-shell" aria-labelledby="hero-title">
         <div class="hero-copy reveal">
-          <div class="eyebrow"><span class="status-dot"></span>Начинающий веб-разработчик</div>
+          <div class="eyebrow"><span class="status-dot"></span><span data-i18n="hero.eyebrow">Начинающий веб-разработчик</span></div>
           <div class="hero-handle">just_remochka</div>
           <h1 id="hero-title">
-            Пытаюсь стать
-            <span class="gradient-text">веб-программистом.</span>
+            <span data-i18n="hero.titlePrefix">Пытаюсь стать</span>
+            <span class="gradient-text" data-i18n="hero.titleAccent">веб-программистом.</span>
           </h1>
-          <p class="hero-lead">
+          <p class="hero-lead" data-i18n="hero.lead">
             Учусь создавать, творить и креативить. Хочу стать Frontend-разработчиком.
           </p>
           <div class="hero-buttons">
-            <a class="button" href="#projects">Смотреть проекты <span aria-hidden="true">↘</span></a>
-            <a class="text-link" href="#about">Больше обо мне <span aria-hidden="true">→</span></a>
+            <a class="button" href="#projects"><span data-i18n="hero.projects">Смотреть проекты</span> <span aria-hidden="true">↘</span></a>
+            <a class="text-link" href="#about"><span data-i18n="hero.about">Больше обо мне</span> <span class="link-arrow" aria-hidden="true">→</span></a>
           </div>
         </div>
 
@@ -70,23 +78,23 @@
           <div class="orb orb-two"></div>
           <div class="profile-card">
             <div class="profile-topline">
-              <span>ПРОФИЛЬ / 01</span>
+              <span data-i18n="profile.label">ПРОФИЛЬ / 01</span>
               <span class="availability">JUST_REMOCHKA</span>
             </div>
             <div class="portrait">
-              <img src="rem.jpg" alt="Аватар just_remochka — Рем" width="800" height="700" decoding="async" fetchpriority="high" />
+              <img src="rem.jpg" alt="Аватар just_remochka — Рем" data-i18n-alt="profile.alt" width="800" height="700" decoding="async" fetchpriority="high" />
             </div>
             <div class="profile-caption">
-              <div><span>Направление</span><strong>Будущий Frontend-разработчик</strong></div>
-              <div><span>Статус</span><strong>Учусь</strong></div>
+              <div><span data-i18n="profile.directionLabel">Направление</span><strong data-i18n="profile.direction">Будущий Frontend-разработчик</strong></div>
+              <div><span data-i18n="profile.statusLabel">Статус</span><strong data-i18n="profile.status">Учусь</strong></div>
             </div>
           </div>
-          <div class="floating-note note-one">Думаю системно.<br /><strong>Делаю смело.</strong></div>
+          <div class="floating-note note-one"><span data-i18n="profile.noteTop">Думаю системно.</span><br /><strong data-i18n="profile.noteStrong">Делаю смело.</strong></div>
           <div class="floating-note note-two"><span>●</span> clean code</div>
         </div>
       </section>
 
-      <section class="ticker" aria-label="Технологии">
+      <section class="ticker" aria-label="Технологии" data-i18n-aria-label="aria.technologies">
         <div class="ticker-track">
           <span>JAVASCRIPT</span><i>✦</i><span>REACT</span><i>✦</i><span>TYPESCRIPT</span><i>✦</i><span>WEBGL</span><i>✦</i><span>NODE.JS</span><i>✦</i><span>UX / UI</span><i>✦</i>
           <span aria-hidden="true">JAVASCRIPT</span><i aria-hidden="true">✦</i><span aria-hidden="true">REACT</span><i aria-hidden="true">✦</i><span aria-hidden="true">TYPESCRIPT</span><i aria-hidden="true">✦</i><span aria-hidden="true">WEBGL</span><i aria-hidden="true">✦</i><span aria-hidden="true">NODE.JS</span><i aria-hidden="true">✦</i><span aria-hidden="true">UX / UI</span><i aria-hidden="true">✦</i>
@@ -96,21 +104,21 @@
       <section class="projects section-shell" id="projects" aria-labelledby="projects-title">
         <div class="section-heading reveal">
           <div>
-            <span class="section-index">01 / ИЗБРАННОЕ</span>
-            <h2 id="projects-title">Проекты, которыми<br />я горжусь</h2>
+            <span class="section-index" data-i18n="projects.index">01 / ИЗБРАННОЕ</span>
+            <h2 id="projects-title"><span data-i18n="projects.titleLine1">Проекты, которыми</span><br /><span data-i18n="projects.titleLine2">я горжусь</span></h2>
           </div>
-          <p>Задачи, в которых стратегия, дизайн и код работают как одно целое.</p>
+          <p data-i18n="projects.description">Задачи, в которых стратегия, дизайн и код работают как одно целое.</p>
         </div>
 
         <div class="project-grid">
           <article class="project-card project-large reveal">
             <div class="project-visual uniid-visual">
-              <img class="project-screenshot" src="uniid.jpg" alt="Главная страница проекта UniID" width="1280" height="686" loading="lazy" decoding="async" />
+              <img class="project-screenshot" src="uniid.jpg" alt="Главная страница проекта UniID" data-i18n-alt="projects.imageAlt" width="1280" height="686" loading="lazy" decoding="async" />
               <span class="project-number">01</span>
             </div>
             <div class="project-info">
-              <div><span>WEB · ЗАЩИТА ДАННЫХ</span><h3>UniID - защита наивысшего уровня</h3></div>
-              <a href="#contacts" aria-label="Подробнее о проекте UniID">↗</a>
+              <div><span data-i18n="projects.category">WEB · ЗАЩИТА ДАННЫХ</span><h3 data-i18n="projects.uniidTitle">UniID — защита наивысшего уровня</h3></div>
+              <a href="#contacts" aria-label="Подробнее о проекте UniID" data-i18n-aria-label="projects.moreAria">↗</a>
             </div>
           </article>
         </div>
@@ -119,20 +127,20 @@
       <section class="about section-shell" id="about" aria-labelledby="about-title">
         <div class="section-heading about-heading reveal">
           <div>
-            <span class="section-index">02 / ОБО МНЕ</span>
-            <h2 id="about-title">Начинающий программист,<br /><span>который познает озы данной профессии</span></h2>
+            <span class="section-index" data-i18n="about.index">02 / ОБО МНЕ</span>
+            <h2 id="about-title"><span data-i18n="about.titleLine1">Начинающий программист,</span><br /><span data-i18n="about.titleLine2">который познает озы данной профессии</span></h2>
           </div>
         </div>
 
         <div class="about-grid">
           <div class="about-statement reveal">
-            <p>Люблю всякое творческое, и на основе них создаю уникальные идеи.</p>
-            <span class="handwritten">Внимание к деталям<br />меняет всё ↗</span>
+            <p data-i18n="about.statement">Люблю всякое творческое, и на основе них создаю уникальные идеи.</p>
+            <span class="handwritten"><span data-i18n="about.detailLine1">Внимание к деталям</span><br /><span data-i18n="about.detailLine2">меняет всё ↗</span></span>
           </div>
           <div class="about-copy reveal" data-delay="100">
-            <p>Смотря на древние Flash-игры, я увлекся данной профессией. Но желание творить браузерные игры пропала с прекращением работы Adobe Flash Player.</p>
+            <p data-i18n="about.story">Смотря на древние Flash-игры, я увлекся данной профессией. Но желание творить браузерные игры пропала с прекращением работы Adobe Flash Player.</p>
             <div class="skill-list">
-              <span>JavaScript / TypeScript</span><span>React / Next.js</span><span>GSAP / WebGL</span><span>Node.js</span><span>Design systems</span><span>Figma</span>
+              <span>JavaScript / TypeScript</span><span>React / Next.js</span><span>GSAP / WebGL</span><span>Node.js</span><span data-i18n="about.designSystems">Design systems</span><span>Figma</span>
             </div>
           </div>
         </div>
@@ -141,15 +149,15 @@
       <section class="stack section-shell" id="stack" aria-labelledby="stack-title">
         <div class="section-heading stack-heading reveal">
           <div>
-            <span class="section-index">03 / ИНСТРУМЕНТЫ</span>
-            <h2 id="stack-title">Стек<br />технологий</h2>
+            <span class="section-index" data-i18n="stack.index">03 / ИНСТРУМЕНТЫ</span>
+            <h2 id="stack-title"><span data-i18n="stack.titleLine1">Стек</span><br /><span data-i18n="stack.titleLine2">технологий</span></h2>
           </div>
-          <p>Инструменты, которые я использую для создания интерфейсов, сервисов и творческих экспериментов.</p>
+          <p data-i18n="stack.description">Инструменты, которые я использую для создания интерфейсов, сервисов и творческих экспериментов.</p>
         </div>
 
         <div class="stack-board reveal">
           <article class="stack-group">
-            <div class="stack-group-heading"><span>01</span><div><h3>Основа</h3><p>Языки, среда и данные</p></div></div>
+            <div class="stack-group-heading"><span>01</span><div><h3 data-i18n="stack.foundationTitle">Основа</h3><p data-i18n="stack.foundationDescription">Языки, среда и данные</p></div></div>
             <div class="tech-grid">
               <div class="tech-item"><i>TS</i><strong>TypeScript</strong><span>↗</span></div>
               <div class="tech-item"><i>JS</i><strong>Node.js</strong><span>↗</span></div>
@@ -159,7 +167,7 @@
           </article>
 
           <article class="stack-group">
-            <div class="stack-group-heading"><span>02</span><div><h3>Интерфейсные системы</h3><p>Веб-продукты и взаимодействие</p></div></div>
+            <div class="stack-group-heading"><span>02</span><div><h3 data-i18n="stack.frontendTitle">Интерфейсные системы</h3><p data-i18n="stack.frontendDescription">Веб-продукты и взаимодействие</p></div></div>
             <div class="tech-grid">
               <div class="tech-item"><i>R</i><strong>React</strong><span>↗</span></div>
               <div class="tech-item"><i>N</i><strong>Next.js</strong><span>↗</span></div>
@@ -171,7 +179,7 @@
           </article>
 
           <article class="stack-group">
-            <div class="stack-group-heading"><span>03</span><div><h3>Лаборатория интеллекта</h3><p>Модели, инференс и обучение</p></div></div>
+            <div class="stack-group-heading"><span>03</span><div><h3 data-i18n="stack.aiTitle">Лаборатория интеллекта</h3><p data-i18n="stack.aiDescription">Модели, инференс и обучение</p></div></div>
             <div class="tech-grid">
               <div class="tech-item"><i>AI</i><strong>OpenAI</strong><span>↗</span></div>
               <div class="tech-item"><i>OL</i><strong>Ollama</strong><span>↗</span></div>
@@ -183,7 +191,7 @@
           </article>
 
           <article class="stack-group">
-            <div class="stack-group-heading"><span>04</span><div><h3>Данные и творчество</h3><p>Аналитика, визуализация и эксперименты</p></div></div>
+            <div class="stack-group-heading"><span>04</span><div><h3 data-i18n="stack.dataTitle">Данные и творчество</h3><p data-i18n="stack.dataDescription">Аналитика, визуализация и эксперименты</p></div></div>
             <div class="tech-grid">
               <div class="tech-item"><i>NP</i><strong>NumPy</strong><span>↗</span></div>
               <div class="tech-item"><i>SP</i><strong>SciPy</strong><span>↗</span></div>
@@ -199,16 +207,16 @@
       <section class="contact section-shell" id="contacts" aria-labelledby="contact-title">
         <div class="contact-card reveal">
           <div class="contact-orbit" aria-hidden="true"><span></span></div>
-          <span class="section-index">04 / КОНТАКТЫ</span>
-          <h2 id="contact-title">Сделаем это<br /><span class="gradient-text">вместе!</span></h2>
-          <div class="contact-links" aria-label="Контакты и социальные сети">
+          <span class="section-index" data-i18n="contacts.index">04 / КОНТАКТЫ</span>
+          <h2 id="contact-title"><span data-i18n="contacts.titleLine1">Сделаем это</span><br /><span class="gradient-text" data-i18n="contacts.titleLine2">вместе!</span></h2>
+          <div class="contact-links" aria-label="Контакты и социальные сети" data-i18n-aria-label="aria.contacts">
             <a class="contact-link contact-email" href="mailto:dgyycycuvh@gmail.com">
               <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="3"/><path d="m4 7 8 6 8-6"/></svg>
               <span><small>Email</small><strong>dgyycycuvh@gmail.com</strong></span><b>↗</b>
             </a>
             <button class="contact-link" type="button" data-copy="@just_remochka">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.2 7.6a12 12 0 0 1 7.6 0M7 17.2c3.2 1.5 6.8 1.5 10 0 1.2-2.3 1.8-4.8 1.7-7.3A9 9 0 0 0 16 8.5l-.7 1.1a8 8 0 0 0-6.6 0L8 8.5a9 9 0 0 0-2.7 1.4c-.1 2.5.5 5 1.7 7.3Z"/><circle cx="9.3" cy="13" r="1" fill="currentColor"/><circle cx="14.7" cy="13" r="1" fill="currentColor"/></svg>
-              <span><small>Discord</small><strong>@just_remochka</strong></span><b class="copy-status">Копировать</b>
+              <span><small>Discord</small><strong>@just_remochka</strong></span><b class="copy-status" data-i18n="contacts.copy">Копировать</b>
             </button>
             <a class="contact-link" href="https://steamcommunity.com/id/just_remochka/" target="_blank" rel="noreferrer">
               <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="16.5" cy="7.5" r="3.5"/><circle cx="6.5" cy="17" r="2.5"/><path d="m8.6 15.6 4.8-5.2M9 17.8l4.7 1.7a4 4 0 0 0 4.8-2l1-2"/></svg>
@@ -229,10 +237,11 @@
 
     <footer class="footer section-shell">
       <span>© 2026 just_remochka</span>
-      <span>Сделано с любопытством и JavaScript</span>
-      <a href="#top">Наверх ↑</a>
+      <span data-i18n="footer.made">Сделано с любопытством и JavaScript</span>
+      <a href="#top" data-i18n="footer.top">Наверх ↑</a>
     </footer>
 
+    <script src="i18n.js" defer></script>
     <script src="script.js" defer></script>
   </body>
 </html>
