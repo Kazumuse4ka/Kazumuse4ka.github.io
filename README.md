@@ -1,1 +1,13 @@
-# just_remochka.github.io
+# Portfolio
+
+Адаптивное демо-портфолио на HTML, CSS и чистом JavaScript.
+
+## Запуск
+
+Откройте `index.html` в браузере или запустите локальный сервер:
+
+```bash
+npx serve .
+```
+
+Основной контент редактируется в `index.html`, стили — в `styles.css`, интерактивность и фоновая анимация — в `script.js`.
