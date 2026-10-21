@@ -8,13 +8,51 @@ const languageButton = document.querySelector('#language-toggle')
 const languageMenu = document.querySelector('#language-menu')
 const currentLanguageLabel = document.querySelector('#current-language')
 const languageOptions = [...document.querySelectorAll('[data-language]')]
+const themeButton = document.querySelector('#theme-toggle')
+const themeColor = document.querySelector('meta[name="theme-color"]')
+const systemTheme = window.matchMedia('(prefers-color-scheme: light)')
 const translations = window.portfolioTranslations
 const supportedLanguages = ['kk', 'ru', 'en']
 const languageLabels = { kk: 'Қазақша', ru: 'Русский', en: 'English' }
 const languageStorageKey = 'portfolio-language'
+const themeStorageKey = 'portfolio-theme'
 let currentLanguage = 'ru'
+let currentTheme = document.documentElement.dataset.theme === 'light' ? 'light' : 'dark'
 
 const translate = (key) => translations[currentLanguage]?.[key] ?? translations.ru[key] ?? key
+
+const getStoredTheme = () => {
+  try {
+    return localStorage.getItem(themeStorageKey)
+  } catch {
+    return null
+  }
+}
+
+const updateThemeButton = () => {
+  const isLight = currentTheme === 'light'
+  const label = translate(isLight ? 'theme.enableDark' : 'theme.enableLight')
+  themeButton.setAttribute('aria-pressed', String(isLight))
+  themeButton.setAttribute('aria-label', label)
+  themeButton.title = label
+}
+
+const applyTheme = (theme, persist = true) => {
+  currentTheme = theme === 'light' ? 'light' : 'dark'
+  document.documentElement.dataset.theme = currentTheme
+  themeColor.content = currentTheme === 'light' ? '#f4f4f0' : '#000000'
+  updateThemeButton()
+
+  if (persist) {
+    try {
+      localStorage.setItem(themeStorageKey, currentTheme)
+    } catch {
+      // The theme still switches if storage is unavailable.
+    }
+  }
+
+  document.dispatchEvent(new CustomEvent('portfolio-theme-change'))
+}
 
 const getStoredLanguage = () => {
   try {
@@ -59,6 +97,7 @@ const applyLanguage = (language, persist = true) => {
 
   const menuIsOpen = menuToggle.getAttribute('aria-expanded') === 'true'
   menuToggle.setAttribute('aria-label', translate(menuIsOpen ? 'aria.closeMenu' : 'aria.openMenu'))
+  updateThemeButton()
 
   if (persist) {
     try {
@@ -70,6 +109,14 @@ const applyLanguage = (language, persist = true) => {
 }
 
 applyLanguage(getInitialLanguage(), false)
+
+themeButton.addEventListener('click', () => {
+  applyTheme(currentTheme === 'dark' ? 'light' : 'dark')
+})
+
+systemTheme.addEventListener('change', (event) => {
+  if (!getStoredTheme()) applyTheme(event.matches ? 'light' : 'dark', false)
+})
 
 const introSeen = (() => {
   try {
@@ -308,10 +355,11 @@ const drawAurora = (time = 0) => {
 
   lastFrameTime = time
   context.clearRect(0, 0, width, height)
-  context.globalCompositeOperation = 'screen'
-  drawBand(0.22, 90, 2, 'rgba(255, 255, 255, .16)', 0.012)
-  drawBand(0.68, 120, 3, 'rgba(255, 255, 255, .10)', -0.009)
-  drawBand(0.48, 65, 1.5, 'rgba(255, 255, 255, .07)', 0.007)
+  const lightTheme = currentTheme === 'light'
+  context.globalCompositeOperation = lightTheme ? 'multiply' : 'screen'
+  drawBand(0.22, 90, 2, lightTheme ? 'rgba(0, 0, 0, .13)' : 'rgba(255, 255, 255, .16)', 0.012)
+  drawBand(0.68, 120, 3, lightTheme ? 'rgba(0, 0, 0, .08)' : 'rgba(255, 255, 255, .10)', -0.009)
+  drawBand(0.48, 65, 1.5, lightTheme ? 'rgba(0, 0, 0, .05)' : 'rgba(255, 255, 255, .07)', 0.007)
   context.globalCompositeOperation = 'source-over'
   phase += 1
   scheduleCanvas()
@@ -341,3 +389,9 @@ window.addEventListener(
 
 resizeCanvas()
 drawAurora()
+
+document.addEventListener('portfolio-theme-change', () => {
+  cancelAnimationFrame(animationFrame)
+  animationFrame = 0
+  drawAurora(performance.now())
+})

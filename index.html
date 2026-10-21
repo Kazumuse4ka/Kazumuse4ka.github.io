@@ -8,12 +8,26 @@
       content="Портфолио начинающего frontend-разработчика just_remochka"
     />
     <meta name="theme-color" content="#000000" />
+    <script>
+      (() => {
+        try {
+          const savedTheme = localStorage.getItem('portfolio-theme')
+          const theme = savedTheme === 'light' || savedTheme === 'dark'
+            ? savedTheme
+            : window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+          document.documentElement.dataset.theme = theme
+          document.querySelector('meta[name="theme-color"]').content = theme === 'light' ? '#f4f4f0' : '#000000'
+        } catch {
+          document.documentElement.dataset.theme = 'dark'
+        }
+      })()
+    </script>
     <title>just_remochka — портфолио</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2228%22 fill=%22black%22/><text x=%2250%22 y=%2267%22 text-anchor=%22middle%22 font-size=%2252%22 font-family=%22Arial%22 fill=%22white%22>JR</text></svg>" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Unbounded:wght@500;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=20261021-7" />
+    <link rel="stylesheet" href="styles.css?v=20261021-8" />
   </head>
   <body class="intro-active" id="top">
     <div class="page-intro" aria-hidden="true">
@@ -54,6 +68,10 @@
       </nav>
 
       <div class="header-actions">
+        <button class="icon-button theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="Включить светлую тему">
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"/></svg>
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.4A8.2 8.2 0 0 1 8.6 4a8.2 8.2 0 1 0 11.4 11.4Z"/></svg>
+        </button>
         <a class="button button-small" href="#contacts" data-i18n="nav.discuss">Обсудить проект</a>
         <button class="menu-button" id="menu-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Открыть меню" data-i18n-aria-label="aria.openMenu">
           <span></span><span></span>
@@ -253,7 +271,7 @@
       <a id="back-to-top" href="#top" data-i18n="footer.top">Наверх ↑</a>
     </footer>
 
-    <script src="i18n.js?v=20261021-3" defer></script>
-    <script src="script.js?v=20261021-3" defer></script>
+    <script src="i18n.js?v=20261021-4" defer></script>
+    <script src="script.js?v=20261021-4" defer></script>
   </body>
 </html>
