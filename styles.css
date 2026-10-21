@@ -209,6 +209,7 @@ h1 { max-width: 820px; margin-top: 14px; font-family: 'Unbounded', sans-serif; f
 .tech-item { display: grid; grid-template-columns: 38px 1fr auto; align-items: center; gap: 11px; min-height: 60px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 13px; background: rgba(0,0,0,.46); transition: transform .25s, border-color .25s, background .25s; }
 .tech-item:hover { border-color: rgba(255,255,255,.35); background: rgba(255,255,255,.045); transform: translateY(-3px); }
 .tech-item i { display: grid; place-items: center; width: 38px; aspect-ratio: 1; border-radius: 10px; background: #f6f6f6; color: #080808; font-family: 'Unbounded', sans-serif; font-size: 9px; font-style: normal; font-weight: 600; }
+.tech-item i img { display: block; width: 22px; height: 22px; object-fit: contain; filter: grayscale(1) contrast(1.25); }
 .tech-item strong { overflow: hidden; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
 .tech-item > span { color: var(--muted); font-size: 12px; transition: transform .25s, color .25s; }
 .tech-item:hover > span { color: #fff; transform: translate(2px,-2px); }
