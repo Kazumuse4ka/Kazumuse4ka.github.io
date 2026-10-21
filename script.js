@@ -10,7 +10,7 @@ const currentLanguageLabel = document.querySelector('#current-language')
 const languageOptions = [...document.querySelectorAll('[data-language]')]
 const translations = window.portfolioTranslations
 const supportedLanguages = ['kk', 'ru', 'en']
-const languageLabels = { kk: 'ҚАЗ', ru: 'РУС', en: 'ENG' }
+const languageLabels = { kk: 'Қазақша', ru: 'Русский', en: 'English' }
 const languageStorageKey = 'portfolio-language'
 let currentLanguage = 'ru'
 
@@ -42,8 +42,7 @@ const applyLanguage = (language, persist = true) => {
   document.querySelector('meta[name="description"]').content = translate('meta.description')
   currentLanguageLabel.textContent = languageLabels[currentLanguage]
   languageOptions.forEach((option) => {
-    if (option.dataset.language === currentLanguage) option.setAttribute('aria-current', 'true')
-    else option.removeAttribute('aria-current')
+    option.setAttribute('aria-selected', String(option.dataset.language === currentLanguage))
   })
 
   document.querySelectorAll('[data-i18n]').forEach((element) => {
@@ -103,24 +102,42 @@ const closeMenu = () => {
   document.body.classList.remove('menu-open')
 }
 
-const closeLanguageMenu = () => {
+const closeLanguageMenu = (restoreFocus = false) => {
   languageMenu.hidden = true
   languageButton.setAttribute('aria-expanded', 'false')
+  if (restoreFocus) languageButton.focus()
+}
+
+const openLanguageMenu = () => {
+  languageMenu.hidden = false
+  languageButton.setAttribute('aria-expanded', 'true')
+  languageMenu.querySelector('[aria-selected="true"]')?.focus()
 }
 
 languageButton.addEventListener('click', () => {
-  const willOpen = languageMenu.hidden
-  languageMenu.hidden = !willOpen
-  languageButton.setAttribute('aria-expanded', String(willOpen))
-  if (willOpen) languageMenu.querySelector('[aria-current="true"]')?.focus()
+  if (languageMenu.hidden) openLanguageMenu()
+  else closeLanguageMenu()
+})
+
+languageButton.addEventListener('keydown', (event) => {
+  if (event.key !== 'ArrowDown') return
+  event.preventDefault()
+  openLanguageMenu()
 })
 
 languageOptions.forEach((option) => {
   option.addEventListener('click', () => {
     applyLanguage(option.dataset.language)
-    closeLanguageMenu()
-    languageButton.focus()
+    closeLanguageMenu(true)
   })
+})
+
+languageMenu.addEventListener('keydown', (event) => {
+  if (!['ArrowDown', 'ArrowUp'].includes(event.key)) return
+  event.preventDefault()
+  const currentIndex = languageOptions.indexOf(document.activeElement)
+  const direction = event.key === 'ArrowDown' ? 1 : -1
+  languageOptions[(currentIndex + direction + languageOptions.length) % languageOptions.length].focus()
 })
 
 document.addEventListener('click', (event) => {
@@ -128,10 +145,7 @@ document.addEventListener('click', (event) => {
 })
 
 document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape' && !languageMenu.hidden) {
-    closeLanguageMenu()
-    languageButton.focus()
-  }
+  if (event.key === 'Escape' && !languageMenu.hidden) closeLanguageMenu(true)
 })
 
 menuToggle.addEventListener('click', () => {
